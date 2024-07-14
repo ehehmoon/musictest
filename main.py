@@ -11,7 +11,6 @@ import time
 from discord.utils import get
 import random
 import asyncio
-import tweepy
 import g4f
 
 
@@ -546,42 +545,14 @@ async def on_reaction_add(reaction, user):
 
 
 #-------------------------------------------------------------------
-consumer_key = os.getenv("consumer_key")
-consumer_secret = os.getenv("consumer_secret")
-access_token = os.getenv("access_token")
-access_secret = os.getenv("access_secret")
-
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_secret)
-api = tweepy.API(auth)
-
-try:
-    api.verify_credentials()
-    print("Authentication OK")
-except:
-    print("Error during authentication")
-
-@bot.command()
-async def tweet(ctx, *, user):
-    if not user:
-        return await ctx.send('no user?', reference=ctx.message)
-    else:
-        print('hello')
-        tweets = api.user_timeline(screen_name=user,
-                           count=2,
-                           include_rts = False,
-                           tweet_mode = 'extended'
-                           )
-        print(tweets)
-        await ctx.send(tweets)
 
 
 bot.load_extension("cogs.music")
 bot.load_extension("cogs.events")
 bot.load_extension("cogs.error_handler")
-bot.load_extension("jishaku") # uncomment this if you want to debug
+bot.load_extension("jishaku") # Uncomment this if you want to debug
 bot.load_extension("cog_reloader") # Uncomment this if you want to hot reload extensions whenever they get editted
-#bot.load_extension("cogs.gpt")
+bot.load_extension("cogs.gpt")
 bot.load_extension("cogs.translator")
 bot.load_extension("cogs.jjamtong")
 bot.load_extension("cogs.aki")
